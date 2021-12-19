@@ -1,7 +1,7 @@
 package controller;
 
 import exceptions.ValueException;
-//import model.*;
+import model.*;
 import view.View;
 
 import javax.swing.*;
@@ -35,6 +35,18 @@ public class Control {
 
                     break;
                 case 2:
+                    try {
+                        optionCheck = view.menuCheckBook0();
+                    } catch (Exception e){
+                        view.showMessageErr("No es válido");
+                    }
+                    if (optionCheck == 1){
+                        //addCheckBook();
+                        optionCheck = 0;
+                    }else{
+                        //findChecks();
+                        optionCheck = 0;
+                    }
                     break;
                 case 3:
                     try {

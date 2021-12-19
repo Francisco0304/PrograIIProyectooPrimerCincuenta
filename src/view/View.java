@@ -49,6 +49,16 @@ public class View {
         return selec.toString();
     }
 
+    public int menuCheckBook0() {
+        int optionCheck = Integer.parseInt(JOptionPane.showInputDialog(null, "Seleccion\n" +
+                "[1] Registrar vehiculo\n" +
+                "[2] Consultar vehiculos\n", "Menu para cheques", JOptionPane.QUESTION_MESSAGE));
+
+        if ( optionCheck < 1 || optionCheck > 2 )
+            showMessageErr("Digito invalido");
+        return optionCheck;
+    }
+
     public int menuCheckBook() {
         int optionCheck = Integer.parseInt(JOptionPane.showInputDialog(null, "Seleccion\n" +
                 "[1] Registrar conductor\n" +
