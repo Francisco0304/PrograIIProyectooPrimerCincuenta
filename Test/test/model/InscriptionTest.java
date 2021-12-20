@@ -17,8 +17,8 @@ class InscriptionTest {
     @Test
     void addDriver() {
         setup();
-        Driver driver1 = new Driver(3234, "Pacho", (byte)24);
-        Driver driver2 = new Driver(1234, "Luis", (byte)24);
+        Driver driver1 = new Driver(3234, "Pacho", (byte)24, 2);
+        Driver driver2 = new Driver(1234, "Luis", (byte)24, 4);
 
         assertTrue( ins.addDriver(driver2));
         assertTrue( ins.addDriver(driver1));

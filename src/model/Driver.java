@@ -5,11 +5,13 @@ public class Driver {
     private int idDriver;
     private String nameDriver;
     private byte ageDriver;
+    private int travelsquantity;
 
-    public Driver(int idDriver, String nameDriver, byte ageDriver) {
+    public Driver(int idDriver, String nameDriver, byte ageDriver, int travelsquantity) {
         this.idDriver = idDriver;
         this.nameDriver = nameDriver;
         this.ageDriver = ageDriver;
+        this.travelsquantity = travelsquantity;
     }
 
     public int getIdDriver() {
@@ -36,12 +38,20 @@ public class Driver {
         this.ageDriver = ageDriver;
     }
 
+    public int getTravelsquantity() {
+        return travelsquantity;
+    }
+
+    public void setTravelsquantity(int travelsquantity) {
+        this.travelsquantity = travelsquantity;
+    }
+
     @Override
     public String toString() {
-        return "Driver{" +
-                "idDriver=" + idDriver +
-                ", nameDriver='" + nameDriver + '\'' +
-                ", ageDriver=" + ageDriver +
-                '}';
+        return " Informacion: " +
+                "\nDocumento identificacion: " + idDriver +
+                "\nNombre: '" + nameDriver + '\'' +
+                "\nEdad: " + ageDriver +
+                "\nConductor encontrado. ";
     }
 }

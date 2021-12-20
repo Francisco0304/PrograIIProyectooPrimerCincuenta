@@ -7,8 +7,8 @@ public class View {
     public int optionMenu() {
         int option = Integer.parseInt(JOptionPane.showInputDialog(null, "Seleccion de usuario\n" +
                 "[1] Gestión de viajes\n" +
-                "[2] Vehiculos\n" +
-                "[3] Conductores\n" +
+                "[2] Registrar datos\n" +
+                "[3] Visualizar datos\n" +
                 "[4] Destino de mayor preferencia\n" +
                 "[5] Salir\n", "Menu Inicio", JOptionPane.QUESTION_MESSAGE));
 
@@ -34,9 +34,19 @@ public class View {
         return input;
     }
 
+    public int readInt(String message, String title) {
+        int input = Integer.parseInt(JOptionPane.showInputDialog(null, message, title, JOptionPane.QUESTION_MESSAGE));
+        return input;
+    }
+
     public double readDouble(String message, String title) {
         double inputDouble = Double.parseDouble(JOptionPane.showInputDialog(null, message, title, JOptionPane.QUESTION_MESSAGE));
         return inputDouble;
+    }
+
+    public byte readByte(String message, String title) {
+        byte inputByte = Byte.parseByte(JOptionPane.showInputDialog(null, message, title, JOptionPane.QUESTION_MESSAGE));
+        return inputByte;
     }
 
     public int confirmDialog(String message, String title) {
@@ -52,7 +62,7 @@ public class View {
     public int menuCheckBook0() {
         int optionCheck = Integer.parseInt(JOptionPane.showInputDialog(null, "Seleccion\n" +
                 "[1] Registrar vehiculo\n" +
-                "[2] Consultar vehiculos\n", "Menu para cheques", JOptionPane.QUESTION_MESSAGE));
+                "[2] Registrar Conductor\n", "Menu Registro", JOptionPane.QUESTION_MESSAGE));
 
         if ( optionCheck < 1 || optionCheck > 2 )
             showMessageErr("Digito invalido");
@@ -61,8 +71,8 @@ public class View {
 
     public int menuCheckBook() {
         int optionCheck = Integer.parseInt(JOptionPane.showInputDialog(null, "Seleccion\n" +
-                "[1] Registrar conductor\n" +
-                "[2] Datos conductores\n", "Menu para cheques", JOptionPane.QUESTION_MESSAGE));
+                "[1] Datos Vehiculo\n" +
+                "[2] Datos conductores\n", "Menu Datos", JOptionPane.QUESTION_MESSAGE));
 
         if ( optionCheck < 1 || optionCheck > 2 )
             showMessageErr("Digito invalido");
