@@ -6,11 +6,10 @@ public class View {
 
     public int optionMenu() {
         int option = Integer.parseInt(JOptionPane.showInputDialog(null, "Seleccion de usuario\n" +
-                "[1] Gestión de viajes\n" +
-                "[2] Registrar datos\n" +
-                "[3] Visualizar datos\n" +
-                "[4] Destino de mayor preferencia\n" +
-                "[5] Salir\n", "Menu Inicio", JOptionPane.QUESTION_MESSAGE));
+                "[1] Registrar datos \n"+
+                "[2] Compar tiketes \n"+
+                "[3] Visualizar datos \n"+
+                "[4] Salir", JOptionPane.QUESTION_MESSAGE));
 
         if ( option < 1 || option > 5 )
             showMessageErr("Digito invalido");
@@ -62,7 +61,8 @@ public class View {
     public int menuCheckBook0() {
         int optionCheck = Integer.parseInt(JOptionPane.showInputDialog(null, "Seleccion\n" +
                 "[1] Registrar vehiculo\n" +
-                "[2] Registrar Conductor\n", "Menu Registro", JOptionPane.QUESTION_MESSAGE));
+                "[2] Registrar Conductor\n"+
+                "[3] Registrar Destino", "Menu Registro", JOptionPane.QUESTION_MESSAGE));
 
         if ( optionCheck < 1 || optionCheck > 2 )
             showMessageErr("Digito invalido");
@@ -72,7 +72,7 @@ public class View {
     public int menuCheckBook() {
         int optionCheck = Integer.parseInt(JOptionPane.showInputDialog(null, "Seleccion\n" +
                 "[1] Datos Vehiculo\n" +
-                "[2] Datos conductores\n", "Menu Datos", JOptionPane.QUESTION_MESSAGE));
+                "[2] Datos conductores", "Menu Datos", JOptionPane.QUESTION_MESSAGE));
 
         if ( optionCheck < 1 || optionCheck > 2 )
             showMessageErr("Digito invalido");

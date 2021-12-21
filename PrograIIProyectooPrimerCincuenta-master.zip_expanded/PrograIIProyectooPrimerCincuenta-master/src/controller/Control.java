@@ -9,18 +9,19 @@ import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Control {
+	private ArrayList<Tiket>tikets;
     private View view;
     private Inscription inscription;
     private Validations val;
-    private int contAcc;
 
     public Control() {
         view = new View();
         inscription = new Inscription();
 
-        contAcc = 0;
+        int  contAcc = 0;
     }
 
     public void initialMenu() {
@@ -35,21 +36,23 @@ public class Control {
             }
             switch ( option ) {
                 case 1:
+                	 try {
+                         optionCheck = view.menuCheckBook0();
+                     } catch (Exception e){
+                         view.showMessageErr("No es válido");
+                     }
+                     if (optionCheck == 1){
+                         //addCheckBook();
+                         optionCheck = 0;
+                     }else{
+                         handlingDrivers();
+                         optionCheck = 0;
+                     }
 
                     break;
                 case 2:
-                    try {
-                        optionCheck = view.menuCheckBook0();
-                    } catch (Exception e){
-                        view.showMessageErr("No es válido");
-                    }
-                    if (optionCheck == 1){
-                        //addCheckBook();
-                        optionCheck = 0;
-                    }else{
-                        handlingDrivers();
-                        optionCheck = 0;
-                    }
+                	registrerTiket();
+                   
                     break;
                 case 3:
                     try {
@@ -66,10 +69,7 @@ public class Control {
                     }
                     break;
                 case 4:
-
-                    break;
-                case 5:
-                    check = false;
+                	check = false;
                     break;
             }
         }
@@ -83,7 +83,7 @@ public class Control {
         String options = "Conductores registrados: " + inscription.getDrivers().size() +
                 "\n[Yes] Agregar conductor\n[No] Eliminar conductor\n[Cancel] Regresar";
 
-        switch ( view.confirmDialog( options, "Gestion de datos" ) ) {
+        switch ( view.confirmDialog( options.replaceAll(" ", null), "Gestion de datos" ) ) {
             case 0:
                 registerDriver();
                 break;
@@ -113,7 +113,7 @@ public class Control {
                     view.showMessage(err);
                     registerDriver();
                 }else {
-                	String name = view.readString("Ingrese el nombre del conductor", "Ingreso de datos");
+                	String name = view.readString("Ingrese el nombre del conductor", "Ingreso de datos").replaceAll(" ", null);
                 	if (name==null || name=="") {
                 		String err = "Debe registrar un dato!";
                         view.showMessage(err);
@@ -200,29 +200,89 @@ public class Control {
     
     public void registerVehicle() {
     	Vehicle vehicle;
-        boolean chechk = false;
-//        try {
-//        	String licensePate = view.readString("Ingese la placa del vehiculo", "Registro de vehiculos");
-//        	
-//        if (inscription.getId_Vehicle(licensePate)!=null) {
-//        	String err = "Ya registrado";
-//            view.showMessage(err);
-//            registerDriver();
-//		} else {
-//
-//		}
-//        
-//        
-//            inscription.addVehicle(null);
-//        	
-//        } catch (ValueException valueException) {
-//            view.showMessageErr(valueException.getMessage());
-//            handlingDrivers();
-//        } catch (Exception e) {
-//            handlingDrivers();
-//        }
-//
-//        inscription.getDrivers().forEach( accs -> System.out.println(accs));
-   }
+    	view.showMessage("Tiene registrados: "+ inscription.getVehicles().size()+ " Vehiculos ");
+        try {
+            String licensePate = view.readString("Ingese la placa del vehiculo" , "Registro de vehiculos");
+            if(inscription.findVehicle(licensePate) != null){
+                String err = "Ya registrado";
+                view.showMessage(err);
+                registerVehicle();
+            }else {
+                byte type = view.readByte("Ingrese el tipo de Bus \n[1] Bus \n[2] Buseta \n[3] MicroBus", "Registro de vehiculos");
+                if (type != 1 && type != 2 && type != 3) {
+                    String err = "Valor invalido, debe se un numero entre 1 y 3";
+                    view.showMessage(err);
+                    registerVehicle();
+                } else {
+                    String fin = inscription.typeVehicles(type);
+                    byte passengers = 0;
+                    if(type == 1){
+                        passengers = 60;
+                    }else if (type == 2){
+                        passengers = 30;
+                    }else{
+                        passengers = 15;
+                    }
+                    vehicle = new Vehicle(licensePate, fin, passengers);
+                    if (inscription.addVehicle(vehicle)) {
+                        String exit = "Correctamente agregado";
+                        view.showMessage(exit);
+
+                        String opt = "�Desea continuar agregando? " +
+                                "\n[Yes] Si\n[No] No";
+                        switch (view.confirmDialog(opt, "Gestion de datos")) {
+                            case 0:
+                                registerVehicle();
+                                break;
+                            case 1:
+                                break;
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            registerVehicle();
+        }
+
+        inscription.getVehicles().forEach( accs -> System.out.println(accs));
+
+    }
+
+    public void searchVehicles(){
+        Vehicle vehicles;
+        try {
+            String data = view.readString("Digite la placa del vehiculo", "Buscar vehiculo");
+            if (inscription.findVehicle(data) == null) {
+                view.showMessageErr("Vehiculo no registrado");
+                searchVehicles();
+            } else {
+                view.showMessage(inscription.searchVehicle(data));
+            }
+        } catch (Exception e) {
+            view.showMessageErr("Error");
+            handlingDrivers();
+        }
+    }
+    
+	private void registrerTiket() {
+
+		
+			String licensePate = view.readString("Ingrese la placa del vehiculo a despachar", "Datos del vehiculo").replaceAll(" ", null);
+			int idDriver = view.readInt("Ingrese la cedula del vehiculo", "Datos del Conductor");
+			byte idTravel = view.readByte("Ingrese  ", "");
+
+			for (int i = 0; i < 4; i++) {
+				
+			tikets.add(new Tiket(18, inscription.findVehicle(licensePate), inscription.findTravel(idTravel),
+					inscription.findDriver(idDriver), LocalDate.now())); 
+
+		}
+		
+		for (int i = 0; i < tikets.size(); i++) {
+			
+			System.out.println(tikets.get(i).getVehicle()+"\n"+tikets.get(i).getTravel());
+			
+		}
+	}
 
 }

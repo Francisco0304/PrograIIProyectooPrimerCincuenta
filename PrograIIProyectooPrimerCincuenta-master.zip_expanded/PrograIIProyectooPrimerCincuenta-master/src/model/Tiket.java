@@ -1,52 +1,62 @@
 package model;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
 
 public class Tiket {
 
-    private ArrayList<Vehicle> vehicles;
-    private ArrayList<Travel> travels;
-    private ArrayList<Driver> drivers;
+	private Vehicle vehicle;
+	private Travel travel;
+	private Driver driver;
+	private LocalDate date;
+	private int chairsfull;
 
+	public Tiket(int chairs, Vehicle vehicle, Travel travel, Driver driver, LocalDate date) {
+		super();
+		this.chairsfull = chairs;
+		this.vehicle = vehicle;
+		this.travel = travel;
+		this.driver = driver;
+		this.date = date;
+	}
 
-    public Tiket() {
-        this.vehicles = new ArrayList<>();
-        this.travels = new ArrayList<>();
-        this.drivers = new ArrayList<>();
-    }
+	public int getChairs() {
+		return chairsfull;
+	}
 
+	public void setChairs(int chairsFull) {
+		this.chairsfull = chairsFull;
+	}
 
-    public ArrayList<Vehicle> getVehicles() {
-        return (ArrayList<Vehicle>) vehicles.clone();
-    }
+	public Vehicle getVehicle() {
+		return vehicle;
+	}
 
-    public ArrayList<Travel> getTravels() {
-        return (ArrayList<Travel>) travels.clone();
-    }
+	public void setVehicle(Vehicle vehicle) {
+		this.vehicle = vehicle;
+	}
 
-    public String typeVehicle(int num) {
+	public Travel getTravel() {
+		return travel;
+	}
 
-        String typeVehicle;
+	public void setTravel(Travel travel) {
+		this.travel = travel;
+	}
 
-        if (num == 1) {
+	public Driver getDriver() {
+		return driver;
+	}
 
-            typeVehicle = "Micro-Bus";
+	public void setDriver(Driver driver) {
+		this.driver = driver;
+	}
 
-        } else if (num == 2) {
+	public LocalDate getDate() {
+		return date;
+	}
 
-            typeVehicle = "Buseta";
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
 
-        } else {
-
-            typeVehicle = "Bus";
-        }
-
-        return typeVehicle;
-    }
-
-    public ArrayList<Driver> getDrivers() {
-        return (ArrayList<Driver>) drivers.clone();
-    }
-
-   
 }
