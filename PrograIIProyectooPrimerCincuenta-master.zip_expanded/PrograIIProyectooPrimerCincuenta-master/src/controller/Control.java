@@ -2,6 +2,7 @@ package controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import exceptions.ValueException;
 import model.*;
@@ -283,8 +284,6 @@ public class Control {
                         break;
                 }
             }
-    		
-    		view.showMessage(inscription.searchTravel(cont));
         } catch (Exception e) {
             registerVehicle();
         }
@@ -294,19 +293,76 @@ public class Control {
     
 	private void registrerTiket() {
 
-		String licensePate = view.readString("Ingrese la placa del vehiculo a despachar", "Datos del vehiculo");
-		int idDriver = view.readInt("Ingrese la cedula del vehiculo", "Datos del Conductor");
-		byte idTravel = view.readByte("Ingrese el indicador del viaje", "Datos del Viaje");
+		if (inscription.getDrivers().size()==0) {
+			view.showMessage("Debe registrar por lo menos un Conductor");
+			
+		}else if (inscription.getTravel().size()==0 ) {
+			view.showMessage("Debe registrar por lo menos un Viaje");
+		}
+		else if(inscription.getVehicles().size()==0){
+			view.showMessage("Debe registrar por lo menos un Vehiculo");
+		} else {
+			String licensePate = view.readString("Ingrese la placa del vehiculo a despachar", "Datos del vehiculo");
+			if (inscription.findVehicle(licensePate)==null) {
+				String err = "Dato no encontrado!";
+	            view.showMessage(err);
+	            registrerTiket();
+			} else {
+				int idDriver = view.readInt("Ingrese la cedula del vehiculo", "Datos del Conductor");
+				if (inscription.findDriver(idDriver)==null) {
+					String err = "Dato no encontrado!";
+		            view.showMessage(err);
+		            registrerTiket();
+				} else {
+					byte idTravel = view.readByte("Ingrese el indicador del viaje", "Datos del Viaje");
+					
+					if (inscription.findTravel(idTravel)==null) {
+						String err = "Dato no encontrado!";
+			            view.showMessage(err);
+			            registrerTiket();
+					} else {
+						boolean bdn=false;				
+						do {
+							int cantPassegers= view.readInt("Digite la cantidad de personas por tiquete", "Datos tikete");
+							tikets.add(new Tiket(cantPassegers, inscription.findVehicle(licensePate), inscription.findTravel(idTravel),
+									inscription.findDriver(idDriver), LocalDate.now()));			
+							
+							String opt = "¿Desea continuar agregando tiketes al vehiculo? " +
+				                        "\n [Yes] Si\n [No] No";
+				                switch (view.confirmDialog(opt, "Gestion de datos")) {
+				                    case 0:
+				                        bdn=true;
+				                        break;
+				                    case 1:
+				                    	bdn=false;
+				                        break;
+				                }
+						} while (bdn==true);
+					}
 
-		tikets.add(new Tiket(18, inscription.findVehicle(licensePate), inscription.findTravel(idTravel),
-				inscription.findDriver(idDriver), LocalDate.now()));
+				}
+			}
+			
+			for (int i = 0; i < tikets.size(); i++) {
 
-		for (int i = 0; i < tikets.size(); i++) {
+				System.out.println(tikets.get(i).getVehicle().getVehicleType() + "---" + tikets.get(i).getTravel().getSourceData()+ "---" + tikets.get(i).getChairs()+ "---" +tikets.get(i).getDate());
 
-			System.out.println(tikets.get(i).getVehicle().getVehicleType() + "---" + tikets.get(i).getTravel().getSourceData());
-
+			}
 		}
 
 	}
-
+	
+	public int mostPopularDestin() {
+		byte indice = 0;
+		int cont;
+		for (int i = 0; i < tikets.size(); i++) {
+			indice= 
+			if (tikets.get(i).getTravel().getId()==(byte)indice) {
+				
+			}
+			
+		}
+		
+		
+	}
 }

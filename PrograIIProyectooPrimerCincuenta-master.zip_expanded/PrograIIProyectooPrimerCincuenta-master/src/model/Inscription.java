@@ -86,9 +86,12 @@ public class Inscription {
         return age;
     }
     
-    public int limitPassengers() {
+    public boolean limitPassengers(Vehicle vehicle, byte cant) {
     	
-    	return 0;
+    	if (cant<=vehicle.getQuantityPassenger()) {
+			
+		} 
+    	return false;
     }
     
     public String searchVehicle(String license){
@@ -108,16 +111,7 @@ public class Inscription {
             }
         return msj;
         }
-        
-
     
-    public String searchTravel(byte id){
-    	String msj="";
-        for (int i = 0; i < drivers.size(); i++) {
-        	msj+=travels.get(i).getSourceData()+" - "+travels.get(i).getDestinationData() ;
-            }
-        return msj;
-        }
     
     public String typeVehicles(byte indic){
         String equals = "";
