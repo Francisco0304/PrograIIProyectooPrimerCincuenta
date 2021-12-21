@@ -59,4 +59,11 @@ public class Tiket {
 		this.date = date;
 	}
 
+	@Override
+	public String toString() {
+		return "Tiket vehicle=" + vehicle + "\n travel=" + travel + "\n driver=" + driver + "\n date=" + date
+				+ "\n chairsfull=" + chairsfull;
+	}
+
+	
 }

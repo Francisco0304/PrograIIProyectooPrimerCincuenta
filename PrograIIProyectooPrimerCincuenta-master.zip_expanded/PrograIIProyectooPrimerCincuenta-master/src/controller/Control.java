@@ -1,27 +1,21 @@
 package controller;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+
 import exceptions.ValueException;
 import model.*;
 import view.View;
 
-import javax.swing.*;
-import java.security.SecureRandom;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Iterator;
-
 public class Control {
-	private ArrayList<Tiket>tikets;
+	private ArrayList<Tiket>tikets; 
     private View view;
     private Inscription inscription;
-    private Validations val;
 
     public Control() {
         view = new View();
         inscription = new Inscription();
-
-        int  contAcc = 0;
+        tikets = new ArrayList<>();
     }
 
     public void initialMenu() {
@@ -42,12 +36,14 @@ public class Control {
                          view.showMessageErr("No es vÃ¡lido");
                      }
                      if (optionCheck == 1){
-                         //addCheckBook();
+                         registerVehicle();
                          optionCheck = 0;
-                     }else{
+                     }else if (optionCheck == 2){
                          handlingDrivers();
                          optionCheck = 0;
-                     }
+                     }else {
+						registrerTravel();
+					}
 
                     break;
                 case 2:
@@ -83,7 +79,7 @@ public class Control {
         String options = "Conductores registrados: " + inscription.getDrivers().size() +
                 "\n[Yes] Agregar conductor\n[No] Eliminar conductor\n[Cancel] Regresar";
 
-        switch ( view.confirmDialog( options.replaceAll(" ", null), "Gestion de datos" ) ) {
+        switch ( view.confirmDialog( options, "Gestion de datos" ) ) {
             case 0:
                 registerDriver();
                 break;
@@ -97,9 +93,7 @@ public class Control {
 
     public void registerDriver() {
         byte age = 0;
-        boolean chechk = false;
         Driver drive;
-        
         try {
             int id = view.readInt("Ingrese la identificacion del conductor a agregar", "Ingreso de datos");
             if (inscription.findDriver(id) != null){
@@ -113,7 +107,7 @@ public class Control {
                     view.showMessage(err);
                     registerDriver();
                 }else {
-                	String name = view.readString("Ingrese el nombre del conductor", "Ingreso de datos").replaceAll(" ", null);
+                	String name = view.readString("Ingrese el nombre del conductor", "Ingreso de datos");
                 	if (name==null || name=="") {
                 		String err = "Debe registrar un dato!";
                         view.showMessage(err);
@@ -249,7 +243,6 @@ public class Control {
     }
 
     public void searchVehicles(){
-        Vehicle vehicles;
         try {
             String data = view.readString("Digite la placa del vehiculo", "Buscar vehiculo");
             if (inscription.findVehicle(data) == null) {
@@ -264,25 +257,56 @@ public class Control {
         }
     }
     
+    private void registrerTravel() {
+    	Travel travel;
+    	
+    	try {
+           
+    		
+    		String sourceData = view.readString("Ingrese la ciudad de Origen", "Registro de Ruta");
+    		String destinationData = view.readString("Digite la ciudad de destino",  "Registro de Ruta");
+    		byte cont = (byte) (inscription.getTravel().size()+1);
+    		int unitvalue = view.readInt("Digite el valor unitario de el vijae ", "Registro de Ruta");
+    		
+    		travel = new Travel(cont, sourceData, destinationData, unitvalue);		
+    		if (inscription.addTravel(travel)) {
+                String exit = "Correctamente agregado";
+                view.showMessage(exit);
+
+                String opt = "¿Desea continuar agregando? " +
+                        "\n[Yes] Si\n[No] No";
+                switch (view.confirmDialog(opt, "Gestion de datos")) {
+                    case 0:
+                        registrerTravel();
+                        break;
+                    case 1:
+                        break;
+                }
+            }
+    		
+    		view.showMessage(inscription.searchTravel(cont));
+        } catch (Exception e) {
+            registerVehicle();
+        }
+
+        inscription.getTravel().forEach( accs -> System.out.println(accs));
+    }
+    
 	private void registrerTiket() {
 
-		
-			String licensePate = view.readString("Ingrese la placa del vehiculo a despachar", "Datos del vehiculo").replaceAll(" ", null);
-			int idDriver = view.readInt("Ingrese la cedula del vehiculo", "Datos del Conductor");
-			byte idTravel = view.readByte("Ingrese  ", "");
+		String licensePate = view.readString("Ingrese la placa del vehiculo a despachar", "Datos del vehiculo");
+		int idDriver = view.readInt("Ingrese la cedula del vehiculo", "Datos del Conductor");
+		byte idTravel = view.readByte("Ingrese el indicador del viaje", "Datos del Viaje");
 
-			for (int i = 0; i < 4; i++) {
-				
-			tikets.add(new Tiket(18, inscription.findVehicle(licensePate), inscription.findTravel(idTravel),
-					inscription.findDriver(idDriver), LocalDate.now())); 
+		tikets.add(new Tiket(18, inscription.findVehicle(licensePate), inscription.findTravel(idTravel),
+				inscription.findDriver(idDriver), LocalDate.now()));
 
-		}
-		
 		for (int i = 0; i < tikets.size(); i++) {
-			
-			System.out.println(tikets.get(i).getVehicle()+"\n"+tikets.get(i).getTravel());
-			
+
+			System.out.println(tikets.get(i).getVehicle().getVehicleType() + "---" + tikets.get(i).getTravel().getSourceData());
+
 		}
+
 	}
 
 }

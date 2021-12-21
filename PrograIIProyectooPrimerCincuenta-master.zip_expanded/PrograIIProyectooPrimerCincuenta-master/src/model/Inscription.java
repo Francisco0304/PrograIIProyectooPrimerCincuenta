@@ -100,6 +100,25 @@ public class Inscription {
         return null;
     }
     
+    public String searchDriver1(int id){
+    	String msj="";
+        for (int i = 0; i < drivers.size(); i++) {
+            
+        	msj+=drivers.get(i).getNameDriver();
+            }
+        return msj;
+        }
+        
+
+    
+    public String searchTravel(byte id){
+    	String msj="";
+        for (int i = 0; i < drivers.size(); i++) {
+        	msj+=travels.get(i).getSourceData()+" - "+travels.get(i).getDestinationData() ;
+            }
+        return msj;
+        }
+    
     public String typeVehicles(byte indic){
         String equals = "";
         if(indic == 1){
