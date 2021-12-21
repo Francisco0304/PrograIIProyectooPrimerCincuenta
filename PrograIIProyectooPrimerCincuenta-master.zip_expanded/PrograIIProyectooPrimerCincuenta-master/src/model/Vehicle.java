@@ -36,6 +36,13 @@ public class Vehicle {
     public void setQuantityPassenger(byte quantityPassenger) {
         this.quantityPassenger = quantityPassenger;
     }
+
+	@Override
+	public String toString() {
+		return "Vehicle licensePate=" + licensePate + "\nvehicleType=" + vehicleType + "\nquantityPassenger="
+				+ quantityPassenger;
+	}
+    
     
 
 }

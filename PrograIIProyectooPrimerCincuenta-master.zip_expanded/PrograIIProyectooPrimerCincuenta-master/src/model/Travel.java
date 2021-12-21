@@ -46,6 +46,12 @@ public class Travel {
 	public void setId(byte id) {
 		this.id = id;
 	}
+
+	@Override
+	public String toString() {
+		return "Travel id=" + id + "\nsourceData=" + sourceData + "\ndestinationData=" + destinationData
+				+ "\nunitvalue=" + unitvalue;
+	}
     
 
 }

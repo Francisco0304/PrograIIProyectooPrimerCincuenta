@@ -9,9 +9,9 @@ public class View {
                 "[1] Registrar datos \n"+
                 "[2] Compar tiketes \n"+
                 "[3] Visualizar datos \n"+
-                "[4] Salir", JOptionPane.QUESTION_MESSAGE));
+                "[4] Salir","Menu Inicio", JOptionPane.QUESTION_MESSAGE));
 
-        if ( option < 1 || option > 5 )
+        if ( option < 1 || option > 4 )
             showMessageErr("Digito invalido");
         return option;
     }
@@ -64,7 +64,7 @@ public class View {
                 "[2] Registrar Conductor\n"+
                 "[3] Registrar Destino", "Menu Registro", JOptionPane.QUESTION_MESSAGE));
 
-        if ( optionCheck < 1 || optionCheck > 2 )
+        if ( optionCheck < 1 || optionCheck > 3 )
             showMessageErr("Digito invalido");
         return optionCheck;
     }
