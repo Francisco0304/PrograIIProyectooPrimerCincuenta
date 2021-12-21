@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 
 public class Vehicle {
 
@@ -38,4 +37,12 @@ public class Vehicle {
         this.quantityPassenger = quantityPassenger;
     }
 
+    @Override
+    public String toString() {
+        return " Vehiculo: " +
+                "\nlicensePate: " + licensePate +
+                "\nvehicleType: " + vehicleType +
+                "\nquantityPassenger: " + quantityPassenger +
+                "\nDatos";
+    }
 }

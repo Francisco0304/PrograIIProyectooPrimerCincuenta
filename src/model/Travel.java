@@ -2,12 +2,14 @@ package model;
 
 public class Travel {
 
-    private String sourceData;
+    private byte id;
+	private String sourceData;
     private String destinationData;
     private int unitvalue;
 
-    public Travel(String sourceData, String destinationData, int unitvalue) {
+    public Travel(byte id,String sourceData, String destinationData, int unitvalue) {
         super();
+        this.id= id;
         this.sourceData = sourceData;
         this.destinationData = destinationData;
         this.unitvalue = unitvalue;
@@ -37,4 +39,21 @@ public class Travel {
         this.unitvalue = unitvalue;
     }
 
+	public byte getId() {
+		return id;
+	}
+
+	public void setId(byte id) {
+		this.id = id;
+	}
+
+    @Override
+    public String toString() {
+        return "Travel{" +
+                "id=" + id +
+                ", sourceData='" + sourceData + '\'' +
+                ", destinationData='" + destinationData + '\'' +
+                ", unitvalue=" + unitvalue +
+                '}';
+    }
 }
