@@ -13,7 +13,19 @@ public class Inscription {
     public Inscription() {
         vehicles = new ArrayList<>();
         drivers = new ArrayList<>();
+        travels = new ArrayList<>();
     }
+
+	public Vehicle findVehicle(String LicensePate) {
+
+		for (Vehicle vehicle : vehicles) {
+			if (vehicle.getLicensePate().equalsIgnoreCase(LicensePate)) {
+				return vehicle;
+			}
+		}
+
+		return null;
+	}
 
     public Driver findDriver(int code){
 
@@ -25,26 +37,20 @@ public class Inscription {
 
         return null;
     }
-
-    public byte rangeAge(byte age){
-        if(age < 18){
-            return 0;
-        }
-        return age;
-    }
     
-    public String getId_Vehicle(String LicensePate) {
-        for (int i = 0; i < vehicles.size(); i++) {
-            if (vehicles.get(i).getLicensePate().equals(LicensePate))
-                return LicensePate;
-        }
+	public Travel findTravel(byte indice) {
 
-        return null;
-    }
+		for (Travel travel : travels) {
+			if (travel.getId()==indice) {
+				return travel;
+			}
+		}
 
+		return null;
+	}
     public boolean addVehicle(Vehicle vehicle) {
 
-        if (getId_Vehicle(vehicle.getLicensePate()) != vehicle.getLicensePate()) {
+        if (findVehicle(vehicle.getLicensePate()) == null) {
             vehicles.add(vehicle);
             return true;
         }
@@ -71,6 +77,39 @@ public class Inscription {
         }
 
         return false;
+    }
+    
+    public byte rangeAge(byte age){
+        if(age < 18){
+            return 0;
+        }
+        return age;
+    }
+    
+    public int limitPassengers() {
+    	
+    	return 0;
+    }
+    
+    public String searchVehicle(String license){
+        for (int i = 0; i < vehicles.size(); i++) {
+            if (license.equals(vehicles.get(i).getLicensePate())) {
+                return vehicles.toString();
+            }
+        }
+        return null;
+    }
+    
+    public String typeVehicles(byte indic){
+        String equals = "";
+        if(indic == 1){
+            equals = "Bus";
+        }else if(indic == 2) {
+            equals = "Buseta";
+        }else{
+            equals = "MicroBus";
+        }
+        return equals;
     }
 
     public ArrayList<Vehicle> getVehicles() {

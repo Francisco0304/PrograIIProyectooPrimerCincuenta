@@ -36,5 +36,6 @@ public class Vehicle {
     public void setQuantityPassenger(byte quantityPassenger) {
         this.quantityPassenger = quantityPassenger;
     }
+    
 
 }
